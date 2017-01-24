@@ -1,0 +1,12 @@
+Package: nldasR
+Type: Package
+Title: Simple interface to online NLDAS data
+Version: 0.0.2
+Author: Luke Winslow <lawinslow@gmail.com>
+Maintainer: Luke Winslow <lawinslow@gmail.com>
+Description: Simple package of functions to access NASA  National Land Data Assimilation System (NLDAS) related data. 
+Not complete and not destined for CRAN unless there is demand. 
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
