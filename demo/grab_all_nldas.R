@@ -9,7 +9,7 @@ timesteps = seq(as.POSIXct('2007-12-23 00:00:00'), as.POSIXct('2016-12-31 00:00:
 
 #url_frmt = 'ftp://hydro1.sci.gsfc.nasa.gov/data/s4pa/NLDAS/NLDAS_FORA0125_H.002/%i/%03i/NLDAS_FORA0125_H.A%s.%02i00.002.grb'
 url_frmt = 'http://hydro1.gesdisc.eosdis.nasa.gov/daac-bin/OTF/HTTP_services.cgi?FILENAME=/data/NLDAS/NLDAS_FORA0125_H.002/%i/%03i/NLDAS_FORA0125_H.A%s.%02i00.002.grb&LABEL=NLDAS_FORA0125_H.nc&SHORTNAME=NLDAS_FORA0125_H&SERVICE=NCL_TO_NetCDF&VERSION=1.02'
-pass = .rs.api.askForPassword('give me your pass')
+pass = .rs.api.askForPassword('Enter your password')
 user = 'lawinslow'
 
 # for(i in 1:length(timesteps)){

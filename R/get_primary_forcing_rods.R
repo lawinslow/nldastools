@@ -12,7 +12,7 @@
 #'
 #' @import httr
 #' @export
-nldas2_primary_forcing <- function(lon, lat, start=as.POSIXct('1979-01-02', tz='UTC'), stop=as.POSIXct('2017-01-01', tz='UTC')){
+nldas2_primary_forcing_rods <- function(lon, lat, start=as.POSIXct('1979-01-02', tz='UTC'), stop=as.POSIXct('2017-01-01', tz='UTC')){
 
   if(length(lon) != 1 || length(lat) != 1){
     stop('Lat and Lon must both be length of 1')
