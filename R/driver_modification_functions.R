@@ -114,11 +114,17 @@ driver_add_rain = function(drivers, months=7:9, rain_add=1){
 
 #' @title Save a driver data.frame to a temporary file
 #' 
+#' @param drivers Driver data.frame object to save
+#' 
 #' @return path to saved file
+#' 
+#' @description 
+#' Creates a temporary file and saves the supplied driver data.frame
+#' to that file. Returns the path to the temporary file.
 #' 
 #' @export
 driver_save = function(drivers){
-  driver_path = tempfile(fileext='.csv')
+  driver_path = gsub('\\\\', '/', tempfile(fileext='.csv'))
   write.csv(drivers, driver_path, row.names=FALSE, quote=FALSE)
   return(driver_path)
 }
