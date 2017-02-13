@@ -18,11 +18,11 @@ nldas2_primary_forcing_rods <- function(lon, lat, start=as.POSIXct('1979-01-02',
     stop('Lat and Lon must both be length of 1')
   }
 
-  if(start < as.POSIXct('1979-01-02', tz='UTC') || start > Sys.Date()){
+  if(start < as.POSIXct('1979-01-02', tz='UTC') || start > as.POSIXct(Sys.Date())){
     stop('Start date must be between 1979-01-02 and now')
   }
 
-  if(stop < as.POSIXct('1979-01-02', tz='UTC') || stop > Sys.Date()){
+  if(stop < as.POSIXct('1979-01-02', tz='UTC') || stop > as.POSIXct(Sys.Date())){
     stop('Stop date must be between 1979-01-02 and now')
   }
 
