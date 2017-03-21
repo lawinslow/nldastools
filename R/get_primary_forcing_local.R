@@ -26,12 +26,15 @@ get_primary_forcing_local = function(lon, lat, start=as.POSIXct('1979-01-02', tz
        abs(lat - driverlat[yi]) > median(diff(driverlat))){
       stop('requested lat/lon is too far outside of data range')
     }
+    
     onevar = ncvar_get(drivernc, drivernc$var[[1]]$name, start = c(xi, yi, 1), count = c(1, 1, -1))
 
     vardata[[i]] = data.frame(drivertime, onevar)
     names(vardata[[i]]) = c('datetime', drivernc$var[[1]]$name)
   }
+  mergedvars = Reduce(function(...) merge(..., by='datetime'), vardata)
+  mergedvars$datetime = as.POSIXct(mergedvars$datetime, origin='1970-01-01', tz='UTC')
 
-  return(data.table::rbindlist(vardata))
+  return(mergedvars)
 }
 

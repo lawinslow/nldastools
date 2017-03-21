@@ -6,7 +6,14 @@
 \usage{
 driver_save(drivers)
 }
+\arguments{
+\item{drivers}{Driver data.frame object to save}
+}
 \value{
 path to saved file
+}
+\description{
+Creates a temporary file and saves the supplied driver data.frame
+to that file. Returns the path to the temporary file.
 }
 
