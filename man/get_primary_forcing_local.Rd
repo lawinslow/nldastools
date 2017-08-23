@@ -7,4 +7,3 @@
 get_primary_forcing_local(lon, lat, start = as.POSIXct("1979-01-02", tz =
   "UTC"), stop = as.POSIXct("2017-01-01", tz = "UTC"))
 }
-

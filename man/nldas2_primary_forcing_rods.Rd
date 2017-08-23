@@ -21,4 +21,3 @@ Interfaces with NASA Data Rods (Time series) services managed by Goddard Earth S
 Information Services Center (GES DISC). More info about the interface available
 \href{https://disc.sci.gsfc.nasa.gov/hydrology/data-rods-time-series-data}{here}.
 }
-

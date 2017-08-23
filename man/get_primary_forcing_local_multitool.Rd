@@ -13,4 +13,3 @@ get_primary_forcing_local_multitool(lons, lats, ids)
 
 \item{ids}{Site ids for mapping of data to lats/lons}
 }
-

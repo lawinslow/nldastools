@@ -14,4 +14,3 @@ NLDAS data can be stored locally. The
 package uses an internally-cached path, which can 
 be accessed and defined using get_* and set_local_storage.
 }
-
