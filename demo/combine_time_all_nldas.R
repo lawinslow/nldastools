@@ -4,22 +4,37 @@ library(dplyr)
 library(abind)
 Sys.setenv(TZ='UTC')
 
-nc_cache = 'Z:/big_datasets/NLDAS'
-out_cache = 'Z:/big_datasets/NLDAS/driver_ncdf4_NLDAS/bigchunk'
+nc_cache = 'Z:/big_datasets/NLDAS-SECONDARY'
 all_dfiles = Sys.glob(file.path(nc_cache, '*', '*', 'NLDAS_FORA0125_H.A*.002.nc'))
+all_dfiles = Sys.glob(file.path(nc_cache, '*', 'NLDAS_FORB0125_M.A*.002.nc'))
+
+out_cache = 'Z:/big_datasets/NLDAS/driver_ncdf4_NLDAS/bigchunk'
+out_cache = 'Z:/big_datasets/NLDAS-SECONDARY/driver_ncdf4_NLDAS'
+
+
 varnames = c('DLWRFsfc_110_SFC', 'DSWRFsfc_110_SFC', 'APCPsfc_110_SFC_acc1h', 'SPFH2m_110_HTGL', 
             'VGRD10m_110_HTGL', 'UGRD10m_110_HTGL', 'TMP2m_110_HTGL', 'PRESsfc_110_SFC')
 
+varnames = c("DSWRFsfc_110_SFC_ave1m", "ACONDsfc_110_SFC_ave1m", "ACPCPsfc_110_SFC_acc1m",  "APCPsfc_110_SFC_acc1m",
+             "SPFHhbl_110_HYBL_ave1m", "VGRDhbl_110_HYBL_ave1m", "UGRDhbl_110_HYBL_ave1m", "TMPhbl_110_HYBL_ave1m",
+             "HGThbl_110_HYBL_ave1m", "PREShbl_110_HYBL_ave1m")
 
-collapse_nldas_var = function(varname){
+
+collapse_nldas_var = function(varname, monthly=FALSE){
   cat(rep('##########', 8), '\n')
   cat('Collapsing the NLDAS Variable:', varname, '\n')
   cat(rep('##########', 8), '\n')
   
   newfile = paste0(out_cache, '/', varname, '.nc4')
   
-  date_from_filename = function(filename){
-    as.POSIXct(strptime(substr(basename(filename), 19,29), format = '%Y%m%d.%H', tz='UTC'))
+  if(monthly){
+    date_from_filename = function(filename){
+      as.POSIXct(ISOdate(as.numeric(substr(basename(filename), 19,22)), as.numeric(substr(basename(filename), 23,24)), 1))
+    }
+  }else{
+    date_from_filename = function(filename){
+      as.POSIXct(strptime(substr(basename(filename), 19,29), format = '%Y%m%d.%H', tz='UTC'))
+    }
   }
   
   times = sapply(all_dfiles, date_from_filename)
@@ -72,5 +87,5 @@ collapse_nldas_var = function(varname){
 }
 
 #run and collapse all needed variables
-newfiles = sapply(varnames, collapse_nldas_var)
+newfiles = sapply(varnames, collapse_nldas_var, monthly=TRUE)
 
