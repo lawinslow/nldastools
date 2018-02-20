@@ -10,8 +10,8 @@ modnames = c('GFDL-ESM2M')
 Sys.setenv(TZ='UTC')
 
 nc_cache  = 'B:/big_data/ISIMIP/'
-#out_cache = 'B:/big_data/ISIMIP/collapsed/'
-out_cache = 'c:/temp/'
+out_cache = 'B:/big_data/ISIMIP/collapsed/'
+#out_cache = 'c:/temp/'
 
 collapse_isimip_data = function(varname, modname, rcp){
   cat(rep('##########', 8), '\n')

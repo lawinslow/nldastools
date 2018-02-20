@@ -10,7 +10,7 @@
 get_isimip_local = function(lon, lat, scenario=c('rcp60', 'rcp26'), model=c('GFDL-ESM2M')){
   
   varnames = c("hurs", "huss", "pr",   "prsn", "ps",   "psl",  "rlds", "rsds", "sfcWind", "tas", "tasmax","tasmin")
-  nc_cache = 'B:/big_data/ISIMIP'
+  nc_cache = 'B:/big_data/ISIMIP/collapsed'
   
   
   date_from_filename = function(filename){
@@ -22,11 +22,12 @@ get_isimip_local = function(lon, lat, scenario=c('rcp60', 'rcp26'), model=c('GFD
   
   for(i in seq_along(varnames)){
     
-    files = c(Sys.glob(file.path(nc_cache, 'historical', modname, paste0(varnames[i], '_*'))),
-                 Sys.glob(file.path(nc_cache, scenario, modname, paste0(varnames[i], '_*'))))
+    #files = c(Sys.glob(file.path(nc_cache, 'historical', modname, paste0(varnames[i], '_*'))),
+    #             Sys.glob(file.path(nc_cache, scenario, modname, paste0(varnames[i], '_*'))))
+    files = Sys.glob(file.path(nc_cache, paste0(model, '_', varnames[i], '.nc4')))
     
-    times = as.Date(sapply(files, date_from_filename, USE.NAMES = FALSE), origin='1970-01-01')
-    files = files[order(times)]
+    #times = as.Date(sapply(files, date_from_filename, USE.NAMES = FALSE), origin='1970-01-01')
+    #files = files[order(times)]
     
     vardata = list()
     
@@ -34,8 +35,8 @@ get_isimip_local = function(lon, lat, scenario=c('rcp60', 'rcp26'), model=c('GFD
       cat(sprintf('On File#: %i of Var: %s\n ', j, varnames[i]))
       drivernc = nc_open(files[j])
       
-      driverlat = ncvar_get(drivernc, 'lat') #+ ncatt_get(drivernc, 'rotated_pole', 'grid_north_pole_latitude')$value
-      driverlon = ncvar_get(drivernc, 'lon') #+ ncatt_get(drivernc, 'rotated_pole', 'grid_north_pole_longitude')$value
+      driverlat = ncvar_get(drivernc, 'lat_110') #+ ncatt_get(drivernc, 'rotated_pole', 'grid_north_pole_latitude')$value
+      driverlon = ncvar_get(drivernc, 'lon_110') #+ ncatt_get(drivernc, 'rotated_pole', 'grid_north_pole_longitude')$value
       if(min(driverlon) < -180){
         driverlon = driverlon + 180
       }
@@ -71,6 +72,7 @@ get_isimip_local = function(lon, lat, scenario=c('rcp60', 'rcp26'), model=c('GFD
     }
     
     fullvars[[i]] = dplyr::bind_rows(vardata)
+    fullvars[[i]]$datetime[52961:nrow(fullvars[[i]])] = fullvars[[i]]$datetime[52961:nrow(fullvars[[i]])] + as.difftime(52959 + 1, units='days')
   }
   
   dout = plyr::join_all(fullvars, by='datetime')
